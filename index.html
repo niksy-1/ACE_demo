@@ -5,15 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CitizenOne - Unified Services</title>
   <style>
-    /* Reset & Base */
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1E3A8A, #F8FAFC);
+      color: #1E3A8A;
       line-height: 1.6;
-      background: linear-gradient(to bottom, #ffffff, #e9f7ef);
-      color: #333;
+      overflow-x: hidden;
     }
-    a { text-decoration: none; color: inherit; }
+
+    /* Glassmorphism utility */
+    .glass {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(30, 58, 138, 0.25);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease-out;
+    }
 
     /* Navbar */
     nav {
@@ -21,230 +34,208 @@
       justify-content: space-between;
       align-items: center;
       padding: 1rem 2rem;
-      background: #fff;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      position: sticky;
-      top: 0;
-      z-index: 10;
+      position: sticky; top: 0; z-index: 10;
     }
-    nav h1 { color: #1d7a46; font-size: 1.5rem; font-weight: bold; }
+    nav.glass { background: rgba(30, 58, 138, 0.55); }
+    nav h1 { color: #FFFFFF; font-size: 1.6rem; font-weight: bold; }
     nav button {
-      padding: 0.5rem 1rem;
-      border: 2px solid #1d7a46;
-      border-radius: 8px;
-      background: transparent;
-      cursor: pointer;
-      transition: all 0.3s;
+      padding: 0.6rem 1.2rem;
+      border: none; border-radius: 8px;
+      background: #F97316;
+      color: #FFFFFF;
+      font-weight: bold; cursor: pointer;
+      transition: 0.3s;
     }
-    nav button:hover { background: #1d7a46; color: #fff; }
+    nav button:hover {
+      background: #059669;
+      box-shadow: 0 0 12px #059669;
+    }
 
     /* Hero */
     .hero {
       text-align: center;
-      padding: 4rem 2rem;
-      animation: fadeIn 1s ease-in;
+      padding: 5rem 2rem;
     }
+    .hero.glass { max-width: 900px; margin: 2rem auto; padding: 3rem; }
     .hero h2 {
-      font-size: 2.5rem;
-      color: #1d7a46;
+      font-size: 2.8rem;
       margin-bottom: 1rem;
+      color: #FFFFFF;
+      text-shadow: 0 0 8px rgba(30,58,138,0.6);
     }
     .hero p {
-      max-width: 600px;
+      max-width: 650px;
       margin: 0 auto 1.5rem;
-      color: #555;
+      color: #F1F5F9;
     }
     .hero button {
-      background: #1d7a46;
-      color: white;
-      padding: 0.75rem 1.5rem;
+      padding: 0.8rem 1.5rem;
+      border-radius: 10px;
       border: none;
-      border-radius: 8px;
-      font-size: 1rem;
+      background: #F97316;
+      color: #FFFFFF;
+      font-weight: bold;
       cursor: pointer;
       transition: 0.3s;
     }
-    .hero button:hover { background: #145a32; }
+    .hero button:hover {
+      background: #059669;
+      box-shadow: 0 0 16px #059669;
+    }
 
     /* Features */
     .features {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-      max-width: 1000px;
-      margin: 2rem auto;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 3rem auto;
       padding: 0 1rem;
     }
     .feature-card {
-      background: white;
-      border-radius: 16px;
-      padding: 1.5rem;
+      padding: 2rem;
       text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
+      color: #FFFFFF;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-decoration: none; /* removes underline */
     }
-    .feature-card:hover { transform: translateY(-5px); }
-    .feature-card h3 { margin-top: 1rem; color: #1d7a46; }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 20px #1E3A8A;
+    }
+    .feature-card h3 { margin-bottom: 0.6rem; color: #F97316; }
 
-    /* Demo Section */
+    /* Demo */
     .demo {
-      background: #d9f2e3;
       padding: 3rem 1rem;
       text-align: center;
     }
-    .demo h3 { font-size: 2rem; margin-bottom: 1.5rem; color: #145a32; }
-    .demo-forms {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      max-width: 900px;
-      margin: auto;
-    }
+    .demo h3 { font-size: 2rem; margin-bottom: 1.2rem; color: #FFFFFF; }
     .form-card {
-      background: white;
-      border-radius: 16px;
-      padding: 1.5rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      text-align: left;
+      max-width: 400px; margin: 1rem auto; padding: 2rem;
+      color: #FFFFFF;
     }
-    .form-card h4 { margin-bottom: 1rem; color: #1d7a46; }
-    input, textarea, select {
+    input, textarea, select, .form-card button {
       width: 100%;
-      padding: 0.6rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border-radius: 10px;
+      border: none;
+    }
+    input, textarea, select {
+      background: rgba(255,255,255,0.12);
+      color: #FFFFFF;
     }
     .form-card button {
-      background: #1d7a46;
-      color: #fff;
-      border: none;
-      padding: 0.7rem 1.2rem;
-      border-radius: 8px;
+      background: #F97316;
+      color: #FFFFFF;
+      font-weight: bold;
       cursor: pointer;
+      transition: 0.3s;
     }
-    .form-card button:hover { background: #145a32; }
+    .form-card button:hover {
+      background: #059669;
+      box-shadow: 0 0 12px #059669;
+    }
 
     /* About */
-    .about {
-      max-width: 800px;
-      margin: 3rem auto;
-      padding: 0 1rem;
-      text-align: center;
-    }
-    .about h3 { font-size: 2rem; margin-bottom: 1rem; color: #1d7a46; }
+    .about { padding: 4rem 2rem; text-align: center; }
+    .about h3 { color: #FFFFFF; margin-bottom: 1rem; }
+    .about p { color: #E2E8F0; }
 
     /* Footer */
     footer {
-      background: #1d7a46;
-      color: white;
+      background: rgba(30,58,138,0.7);
+      color: #FFFFFF;
       text-align: center;
       padding: 1rem;
+      margin-top: 2rem;
     }
 
-    /* Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* Animation Classes */
+    .show { opacity: 1; transform: translateY(0); }
+
+    @media(max-width:768px){
+      .hero h2 { font-size: 2rem; }
+      .features { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-
-  <!-- Navbar -->
-  <nav>
+  <nav class="glass">
     <h1>CitizenOne</h1>
-     <a href="login.html">
-    <button>Login</button>
-    </a>
+    <a href="login.html"><button>Login</button></a>
   </nav>
 
-  <!-- Hero -->
-  <section class="hero">
+  <section class="hero glass">
     <h2>One Portal for All Government Services</h2>
     <p>From complaints to bill payments, appointments to documents — manage it all from a single access point.</p>
     <button>Get Started</button>
   </section>
 
-  <!-- Features -->
   <section class="features">
-    <a href="complaints.html" class="feature-card">
+    <a href="complaints.html" class="feature-card glass">
       <h3>📋 Citizen Complaints</h3>
       <p>Report issues easily with status tracking.</p>
     </a>
-    <a href="appointments.html" class="feature-card">
+    <a href="appointments.html" class="feature-card glass">
       <h3>📅 Service Appointments</h3>
       <p>Book and manage government appointments.</p>
     </a>
-    <a href="documents.html" class="feature-card">
+    <a href="documents.html" class="feature-card glass">
       <h3>📄 Document Requests</h3>
       <p>Access and download verified government documents.</p>
     </a>
-    <a href="bills.html" class="feature-card">
+    <a href="bills.html" class="feature-card glass">
       <h3>💳 Utility Bill Payments</h3>
       <p>Pay bills securely via UPI/BBPS integrations.</p>
     </a>
   </section>
 
-  <!-- Demo -->
   <section class="demo">
     <h3>Try a Demo Service</h3>
-    <div class="demo-forms">
-      <!-- Complaint Form -->
-      <div class="form-card">
-        <h4>Lodge a Complaint</h4>
-        <form id="complaintForm">
-          <input type="text" id="issueTitle" placeholder="Issue Title" required>
-          <textarea id="issueDesc" placeholder="Describe your issue" required></textarea>
-          <button type="submit">Submit</button>
-        </form>
-        <p id="complaintMsg" style="color:green; font-weight:bold;"></p>
-      </div>
-
-      <!-- Bill Payment -->
-      <div class="form-card">
-        <h4>Pay a Utility Bill</h4>
-        <form id="billForm">
-          <input type="text" id="consumerId" placeholder="Consumer ID" required>
-          <select id="billType">
-            <option>Electricity</option>
-            <option>Water</option>
-            <option>Gas</option>
-          </select>
-          <button type="submit">Pay Now</button>
-        </form>
-        <p id="billMsg" style="color:green; font-weight:bold;"></p>
-      </div>
+    <div class="form-card glass">
+      <h4>Lodge a Complaint</h4>
+      <form id="complaintForm">
+        <input type="text" id="issueTitle" placeholder="Issue Title" required>
+        <textarea id="issueDesc" placeholder="Describe your issue" required></textarea>
+        <button type="submit">Submit</button>
+      </form>
+      <p id="complaintMsg"></p>
     </div>
   </section>
 
-  <!-- About -->
-  <section class="about">
+  <section class="about glass">
     <h3>Why CitizenOne?</h3>
-    <p>A unified platform reduces confusion, saves time, and increases transparency in government interactions. Designed to be scalable, secure, and citizen-friendly.</p>
+    <p style="max-width:600px; margin:auto;">
+      A unified platform reduces confusion, saves time, and increases transparency in government interactions. Designed to be scalable, secure, and citizen-friendly.
+    </p>
   </section>
 
-  <!-- Footer -->
-  <footer>
+  <footer class="glass">
     <p>© 2025 CitizenOne | Unified Government Services</p>
   </footer>
 
   <script>
-    // Complaint form handler
+    // Form submit
     document.getElementById('complaintForm').addEventListener('submit', function(e) {
       e.preventDefault();
       document.getElementById('complaintMsg').innerText = "✅ Complaint submitted successfully!";
       this.reset();
     });
 
-    // Bill form handler
-    document.getElementById('billForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const type = document.getElementById('billType').value;
-      document.getElementById('billMsg').innerText = `✅ ${type} bill paid successfully!`;
-      this.reset();
+    // Animate on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.glass').forEach(el => {
+      observer.observe(el);
     });
   </script>
-
 </body>
 </html>
