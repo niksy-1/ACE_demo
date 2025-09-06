@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ayuva Landing Page</title>
+    <title>GovConnect Portal</title>
   <link rel="stylesheet" href="styles.css" />
   
 </head>
@@ -12,56 +12,47 @@
   <!-- Navbar -->
   <nav>
     <div class="logo-container">
-      <img src="Ayuva logo.png" alt="Ayuva Logo" class="logo">
-      <h1>Ayuva</h1>
+      <img src="Ayuva logo.png" alt="GovConnect Logo" class="logo">
+      <h1>GovConnect</h1>
     </div>
     <div class="links">
-      <a href="#features">Features</a>
+      <a href="#features">Services</a>
       <a href="#demo">Demo</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </div>
-    <button>Join Waitlist</button>
+      <button id="authButton" class="auth-trigger">Login / Sign Up</button>
   </nav>
 
   <!-- Hero -->
   <section class="hero">
     <div>
-      <h2>Modern Nutrient Analysis <br> Meets <span>Ancient Ayurveda</span></h2>
-      <p>A cloud-based platform for Ayurvedic dietitians – holistic, accurate, and patient-focused. Generate personalized diet charts with both scientific nutrition and Ayurvedic principles.</p>
-      <button>🚀 Try Demo</button>
+      <h2>One Portal for <br> <span>All Government Services</span></h2>
+      <p>Submit complaints, book appointments, request documents, and pay utility bills—all from a single, citizen-friendly platform.</p>
+      <button class="auth-trigger">🚀 Get Started</button>
       <button class="outline">📋 Learn More</button>
     </div>
-    <spline-viewer url="https://prod.spline.design/BvP8Xmk6KTkJsJcr/scene.splinecode"></spline-viewer>
   </section>
 
   <!-- Features -->
   <section id="features" class="features">
-    <h3>✨ Key Features</h3>
+    <h3>✨ Key Services</h3>
     <div class="feature-grid">
       <div class="feature-card">
-        <h4>Patient Profiles</h4>
-        <p>Manage complete patient details including lifestyle, water intake, and bowel habits.</p>
+        <h4>Citizen Complaints</h4>
+        <p>Report issues to the right department and track resolution progress.</p>
       </div>
       <div class="feature-card">
-        <h4>Nutrient & Ayurvedic Tracking</h4>
-        <p>Combine modern nutrition metrics with Ayurvedic food properties.</p>
+        <h4>Service Appointments</h4>
+        <p>Schedule visits with government agencies quickly and easily.</p>
       </div>
       <div class="feature-card">
-        <h4>Automated Diet Charts</h4>
-        <p>Generate Ayurveda-compliant diet plans instantly with clear reports.</p>
+        <h4>Document Requests</h4>
+        <p>Apply for certificates and official records without leaving home.</p>
       </div>
       <div class="feature-card">
-        <h4>Secure & Compliant</h4>
-        <p>Protect patient data with HIPAA/local health law compliance.</p>
-      </div>
-      <div class="feature-card">
-        <h4>Mobile Ready</h4>
-        <p>Access and manage diet charts on smartphones and tablets.</p>
-      </div>
-      <div class="feature-card">
-        <h4>Integration</h4>
-        <p>Easily connect with HIS/EHR systems for hospitals and clinics.</p>
+        <h4>Utility Bill Payments</h4>
+        <p>Pay water, power, and other municipal bills in one secure portal.</p>
       </div>
     </div>
   </section>
@@ -74,16 +65,16 @@
 
   <!-- About -->
   <section id="about" class="about">
-    <h3>🌱 Why Ayuva?</h3>
+    <h3>🌐 About GovConnect</h3>
     <p>
-      Currently, Ayurvedic diet charts are still written manually. Existing software focuses on macro/micro nutrients but ignores Ayurvedic concepts like Rasa (six tastes) and food properties (hot/cold, digestibility). Ayuva bridges this gap, offering a modern, intuitive, and Ayurveda-compliant solution.
+      Government services are often scattered across different offices and websites. GovConnect centralizes citizen complaints, appointments, documents, and payments so people can manage their civic needs from one simple dashboard.
     </p>
   </section>
 
   <!-- Contact -->
   <section id="contact" class="contact">
     <h3>📩 Get in Touch</h3>
-    <p>Want to collaborate or try Ayuva?</p>
+    <p>Have questions or want to partner with us?</p>
     <button>Email Us</button>
     <div class="socials">
       <a href="#">GitHub</a>
@@ -92,13 +83,146 @@
     </div>
   </section>
 
+  <!-- Auth Modal -->
+  <div id="authModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="tabs">
+        <button class="tab active" data-tab="loginForm">Login</button>
+        <button class="tab" data-tab="signupForm">Sign Up</button>
+      </div>
+      <form id="loginForm" class="form active">
+        <label for="loginId">Aadhaar or Phone Number</label>
+        <input type="text" id="loginId" placeholder="Enter 12-digit Aadhaar or 10-digit phone" required>
+        <button type="submit">Send OTP</button>
+      </form>
+      <form id="signupForm" class="form">
+        <label for="signupName">Full Name</label>
+        <input type="text" id="signupName" required>
+        <label for="signupAadhaar">Aadhaar Number</label>
+        <input type="text" id="signupAadhaar" placeholder="12-digit Aadhaar" required>
+        <label for="signupPhone">Phone Number</label>
+        <input type="text" id="signupPhone" placeholder="10-digit phone" required>
+        <button type="submit">Register</button>
+      </form>
+      <div class="oauth-section">
+        <p>Or link your verified documents via DigiLocker</p>
+        <button id="digilockerLink" type="button">Link DigiLocker</button>
+      </div>
+      <div id="digilockerData" style="display:none;">
+        <h5>Verified Profile</h5>
+        <p id="profileInfo"></p>
+        <h5>Documents</h5>
+        <ul id="documentList"></ul>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer>
-    © 2025 Ayuva | Hackathon Project
+    © 2025 GovConnect | Civic Tech Initiative
   </footer>
 
-  <!-- Spline Script -->
-  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.56/build/spline-viewer.js"></script>
+  <script>
+    const modal = document.getElementById('authModal');
+    const triggers = document.querySelectorAll('.auth-trigger');
+    const closeBtn = document.querySelector('.close');
+    const tabs = document.querySelectorAll('.tab');
+    const forms = document.querySelectorAll('.form');
+
+    triggers.forEach(btn => btn.addEventListener('click', () => modal.style.display = 'flex'));
+    closeBtn.addEventListener('click', () => modal.style.display = 'none');
+    window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+
+    tabs.forEach(tab => tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      forms.forEach(f => f.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    }));
+
+    function isValidAadhaar(num){ return /^\d{12}$/.test(num); }
+    function isValidPhone(num){ return /^\d{10}$/.test(num); }
+
+    document.getElementById('loginForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const id = document.getElementById('loginId').value.trim();
+      if (isValidAadhaar(id) || isValidPhone(id)) {
+        alert('OTP sent for verification');
+      } else {
+        alert('Enter a valid 12-digit Aadhaar or 10-digit phone number');
+      }
+    });
+
+    document.getElementById('signupForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const aadhaar = document.getElementById('signupAadhaar').value.trim();
+      const phone = document.getElementById('signupPhone').value.trim();
+      if (isValidAadhaar(aadhaar) && isValidPhone(phone)) {
+        alert('Registration successful! OTP sent for confirmation.');
+      } else {
+        alert('Please enter valid Aadhaar and phone numbers.');
+      }
+    });
+
+    const DIGILOCKER_BASE = "https://sandbox.meripehchaan.gov.in/public/oauth2/1";
+    const DIGILOCKER_CLIENT_ID = "SANDBOX_CLIENT_ID"; // demo client ID from API Setu sandbox
+    const DIGILOCKER_REDIRECT_URI = window.location.href.split("?")[0];
+    const DIGILOCKER_SCOPE = "openid profile";
+
+    document.getElementById('digilockerLink').addEventListener('click', () => {
+      const authUrl = `${DIGILOCKER_BASE}/authorize?response_type=code&client_id=${DIGILOCKER_CLIENT_ID}&redirect_uri=${encodeURIComponent(DIGILOCKER_REDIRECT_URI)}&scope=${encodeURIComponent(DIGILOCKER_SCOPE)}`;
+      window.location.href = authUrl;
+    });
+
+    async function handleDigiLockerCallback(){
+      const params = new URLSearchParams(window.location.search);
+      if(params.has('code')){
+        const code = params.get('code');
+        try {
+          const tokenRes = await fetch(`${DIGILOCKER_BASE}/token`, {
+            method: 'POST',
+            headers: {'Content-Type':'application/x-www-form-urlencoded'},
+            body: `code=${code}&client_id=${DIGILOCKER_CLIENT_ID}&redirect_uri=${encodeURIComponent(DIGILOCKER_REDIRECT_URI)}&grant_type=authorization_code`
+          });
+          const tokenData = await tokenRes.json();
+          const accessToken = tokenData.access_token;
+          const profileRes = await fetch(`${DIGILOCKER_BASE}/userinfo`, {
+            headers: {Authorization:`Bearer ${accessToken}`}
+          });
+          const profile = await profileRes.json();
+          document.getElementById('profileInfo').textContent = `${profile.name} - ${profile.mobile}`;
+          const docRes = await fetch(`${DIGILOCKER_BASE}/files`, {
+            headers: {Authorization:`Bearer ${accessToken}`}
+          });
+          const docs = await docRes.json();
+          const list = document.getElementById('documentList');
+          list.innerHTML = '';
+          (docs.items || []).forEach(d => {
+            const li = document.createElement('li');
+            li.textContent = `${d.type}: ${d.uri}`;
+            list.appendChild(li);
+          });
+          document.getElementById('digilockerData').style.display = 'block';
+          sendOtp(profile.mobile);
+        } catch(err){
+          console.error('DigiLocker flow failed', err);
+        }
+      }
+    }
+
+    function sendOtp(mobile){
+      alert(`OTP sent to ${mobile}`);
+      const otp = prompt('Enter received OTP:');
+      if(otp === '123456'){
+        alert('Mobile verified and DigiLocker profile linked!');
+      } else {
+        alert('Invalid OTP. Please try again.');
+      }
+    }
+
+    handleDigiLockerCallback();
+  </script>
 
 </body>
 </html>
