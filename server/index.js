@@ -36,7 +36,14 @@ app.post('/api/verify/start', async (req, res) => {
       .verifications.create({ to: phone, channel: 'sms' });
     res.json({ sid: v.sid, status: v.status });
   } catch (e) {
-    res.status(500).json({ error: e.message || 'Start verification failed' });
+    console.error('Verify start failed:', e);
+    const status = e.status && Number.isInteger(e.status) ? e.status : 500;
+    res.status(status).json({
+      error: e.message || 'Start verification failed',
+      code: e.code,
+      moreInfo: e.moreInfo,
+      details: e.details,
+    });
   }
 });
 
@@ -53,7 +60,14 @@ app.post('/api/verify/check', async (req, res) => {
     const approved = check.status === 'approved';
     res.json({ status: check.status, approved });
   } catch (e) {
-    res.status(500).json({ error: e.message || 'Check verification failed' });
+    console.error('Verify check failed:', e);
+    const status = e.status && Number.isInteger(e.status) ? e.status : 500;
+    res.status(status).json({
+      error: e.message || 'Check verification failed',
+      code: e.code,
+      moreInfo: e.moreInfo,
+      details: e.details,
+    });
   }
 });
 
@@ -65,4 +79,3 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
-
