@@ -13,6 +13,13 @@ app.use(express.urlencoded({ extended: false }));
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const verifyServiceSid = process.env.TWILIO_VERIFY_SERVICE_SID;
+console.log({
+  hasSID: !!process.env.TWILIO_ACCOUNT_SID,
+  hasToken: !!process.env.TWILIO_AUTH_TOKEN,
+  hasService: !!process.env.TWILIO_VERIFY_SERVICE_SID,
+  serviceLooksRight: (process.env.TWILIO_VERIFY_SERVICE_SID || '').startsWith('VA')
+});
+
 
 if (!accountSid || !authToken || !verifyServiceSid) {
   console.warn(
