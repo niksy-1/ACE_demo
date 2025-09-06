@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CitizenOne - Document Requests</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; background:#f7fcfa; }
+    nav { background:#1d7a46; padding:1rem; color:white; }
+    nav a { color:white; margin-right:1rem; text-decoration:none; }
+    .container { max-width:800px; margin:2rem auto; background:white; padding:2rem; border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+    h2 { color:#1d7a46; margin-bottom:1rem; }
+    select, input { width:100%; padding:0.6rem; margin-bottom:1rem; border:1px solid #ccc; border-radius:8px; }
+    button { background:#1d7a46; color:white; border:none; padding:0.7rem 1.2rem; border-radius:8px; cursor:pointer; }
+    button:hover { background:#145a32; }
+    #docMsg { margin-top:1rem; font-weight:bold; color:green; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">🏠 Home</a>
+    <span>Document Requests</span>
+  </nav>
+
+  <div class="container">
+    <h2>Request a Document</h2>
+    <form id="docForm">
+      <select required>
+        <option value="">Select Document</option>
+        <option>Birth Certificate</option>
+        <option>Driving License</option>
+        <option>Income Certificate</option>
+      </select>
+      <input type="text" placeholder="Enter ID/Reference No." required>
+      <button type="submit">Request Document</button>
+    </form>
+    <p id="docMsg"></p>
+  </div>
+
+  <script>
+    document.getElementById('docForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('docMsg').innerText = "✅ Document request submitted successfully!";
+      this.reset();
+    });
+  </script>
+</body>
+</html>

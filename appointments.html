@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CitizenOne - Appointments</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; background:#f9fefc; }
+    nav { background:#1d7a46; padding:1rem; color:white; }
+    nav a { color:white; margin-right:1rem; text-decoration:none; }
+    .container { max-width:800px; margin:2rem auto; background:white; padding:2rem; border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+    h2 { color:#1d7a46; margin-bottom:1rem; }
+    input, select { width:100%; padding:0.6rem; margin-bottom:1rem; border:1px solid #ccc; border-radius:8px; }
+    button { background:#1d7a46; color:white; border:none; padding:0.7rem 1.2rem; border-radius:8px; cursor:pointer; }
+    button:hover { background:#145a32; }
+    #appointmentMsg { margin-top:1rem; font-weight:bold; color:green; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">🏠 Home</a>
+    <span>Service Appointments</span>
+  </nav>
+
+  <div class="container">
+    <h2>Book a Service Appointment</h2>
+    <form id="appointmentForm">
+      <input type="text" placeholder="Full Name" required>
+      <input type="email" placeholder="Email Address" required>
+      <input type="date" required>
+      <select required>
+        <option value="">Select Service</option>
+        <option>Passport</option>
+        <option>Aadhar Update</option>
+        <option>Driving License</option>
+      </select>
+      <button type="submit">Book Appointment</button>
+    </form>
+    <p id="appointmentMsg"></p>
+  </div>
+
+  <script>
+    document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('appointmentMsg').innerText = "✅ Appointment booked successfully!";
+      this.reset();
+    });
+  </script>
+</body>
+</html>

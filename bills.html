@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CitizenOne - Bill Payments</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; background:#f6fdfb; }
+    nav { background:#1d7a46; padding:1rem; color:white; }
+    nav a { color:white; margin-right:1rem; text-decoration:none; }
+    .container { max-width:800px; margin:2rem auto; background:white; padding:2rem; border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+    h2 { color:#1d7a46; margin-bottom:1rem; }
+    input, select { width:100%; padding:0.6rem; margin-bottom:1rem; border:1px solid #ccc; border-radius:8px; }
+    button { background:#1d7a46; color:white; border:none; padding:0.7rem 1.2rem; border-radius:8px; cursor:pointer; }
+    button:hover { background:#145a32; }
+    #billMsg { margin-top:1rem; font-weight:bold; color:green; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">🏠 Home</a>
+    <span>Utility Bill Payments</span>
+  </nav>
+
+  <div class="container">
+    <h2>Pay a Utility Bill</h2>
+    <form id="billForm">
+      <input type="text" placeholder="Consumer ID" required>
+      <select required>
+        <option value="">Select Bill Type</option>
+        <option>Electricity</option>
+        <option>Water</option>
+        <option>Gas</option>
+      </select>
+      <button type="submit">Pay Now</button>
+    </form>
+    <p id="billMsg"></p>
+  </div>
+
+  <script>
+    document.getElementById('billForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('billMsg').innerText = "✅ Bill paid successfully!";
+      this.reset();
+    });
+  </script>
+</body>
+</html>
