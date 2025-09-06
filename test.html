@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Supabase Users Test</title>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <h1>Supabase Users Test</h1>
+  <button id="fetchUsers">Fetch Users</button>
+  <pre id="output"></pre>
+
+  <script>
+    const SUPABASE_URL = "https://yloptztnpoexynypgxau.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlsb3B0enRucG9leHlueXBneGF1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxNjgyNjUsImV4cCI6MjA3Mjc0NDI2NX0.7YuPQRX0AZaLp3ytCQXeQWv31qgmd5jaZkf_PCr1MJQ";
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    document.getElementById("fetchUsers").addEventListener("click", async () => {
+      const output = document.getElementById("output");
+      output.textContent = "Loading...";
+
+      const { data, error } = await supabase.from("users").select("*");
+
+      if (error) {
+        output.textContent = "Error: " + error.message;
+      } else {
+        output.textContent = JSON.stringify(data, null, 2);
+      }
+    });
+  </script>
+</body>
+</html>
