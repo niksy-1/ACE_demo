@@ -1,64 +1,152 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Phone Verification</title>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CitizenOne - Phone Verification</title>
   <!-- CSP: allow same-origin resources; allow inline script for this page -->
   <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self';
-                 script-src 'self' 'unsafe-inline';
-                 connect-src 'self';
-                 style-src 'self' 'unsafe-inline';
-                 img-src 'self' data:;">
-
+        content="default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
   <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; max-width: 720px; margin: 40px auto; padding: 0 16px; }
-    h1 { font-size: 1.4rem; margin-bottom: 0.5rem; }
-    .card { border: 1px solid #ddd; border-radius: 12px; padding: 16px; margin: 16px 0; }
-    label { display: block; margin: 8px 0 4px; font-weight: 600; }
-    input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; }
-    button { margin-top: 10px; padding: 10px 14px; border: 0; border-radius: 8px; background: #111827; color: #fff; font-weight: 600; cursor: pointer; }
+    /* Reset and base styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1E3A8A, #F8FAFC);
+      color: #1E3A8A;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Glassmorphism utility */
+    .glass {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(30, 58, 138, 0.25);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease-out;
+    }
+    .show { opacity: 1; transform: translateY(0); }
+
+    /* Navbar */
+    nav {
+      background: rgba(30, 58, 138, 0.55);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      position: sticky; top: 0;
+    }
+    nav a {
+      color: #F2F2F2;
+      margin-right: 1rem;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+    nav a:hover { color: #F97316; }
+    nav span { color: #FFFFFF; font-weight: bold; }
+
+    /* Container */
+    .container {
+      max-width: 720px;
+      margin: 3rem auto;
+      padding: 2rem;
+    }
+
+    h2 {
+      color: #FFFFFF;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .muted {
+      color: #E2E8F0;
+      font-size: 0.95rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin: 0.5rem 0;
+      font-weight: 600;
+      color: #FFFFFF;
+    }
+    input {
+      width: 100%;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #FFFFFF;
+    }
+    input::placeholder { color: rgba(255, 255, 255, 0.7); }
+
+    button {
+      padding: 0.8rem 1.2rem;
+      border: none;
+      border-radius: 10px;
+      background: #F97316;
+      color: #FFFFFF;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #059669;
+      box-shadow: 0 0 12px #059669;
+    }
     button:disabled { opacity: 0.6; cursor: not-allowed; }
-    .row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: end; }
-    .muted { color: #555; font-size: 0.95rem; }
-    pre { background: #0b1020; color: #d1e7ff; padding: 12px; border-radius: 10px; overflow: auto; font-size: 0.9rem; }
-    .ok { color: #065f46; }
-    .err { color: #991b1b; }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: end;
+      margin-bottom: 1.5rem;
+    }
+
+    pre {
+      background: #0b1020;
+      color: #d1e7ff;
+      padding: 12px;
+      border-radius: 10px;
+      overflow: auto;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
 <body>
-  <h1>Verify your phone number</h1>
-  <p class="muted">Enter your number in <strong>E.164</strong> format (e.g., <code>+91XXXXXXXXXX</code>). This page calls your server endpoints:
-    <code>POST /api/verify/start</code> and <code>POST /api/verify/check</code>.
-  </p>
+  <nav class="glass">
+    <a href="index.html">🏠 Home</a>
+    <span>Phone Verification</span>
+  </nav>
 
-  <div class="card">
+  <div class="container glass">
+    <h2>Verify your phone number</h2>
+    <p class="muted">Enter your number in <strong>E.164</strong> format (e.g., <code>+91XXXXXXXXXX</code>). This page calls your server endpoints: <code>POST /api/verify/start</code> and <code>POST /api/verify/check</code>.</p>
+
     <div class="row">
       <div>
         <label for="phone">Phone (E.164)</label>
         <input id="phone" name="phone" placeholder="+91XXXXXXXXXX" autocomplete="tel" />
       </div>
-      <div>
-        <button id="btnSend" onclick="startVerification()">Send OTP</button>
-      </div>
+      <button id="btnSend" onclick="startVerification()">Send OTP</button>
     </div>
-  </div>
 
-  <div class="card">
     <div class="row">
       <div>
         <label for="otp">Enter OTP</label>
         <input id="otp" name="otp" inputmode="numeric" pattern="[0-9]*" placeholder="6-digit code" />
       </div>
-      <div>
-        <button id="btnCheck" onclick="checkVerification()">Verify</button>
-      </div>
+      <button id="btnCheck" onclick="checkVerification()">Verify</button>
     </div>
-  </div>
 
-  <div class="card">
     <strong>Response</strong>
     <pre id="out">(nothing yet)</pre>
   </div>
@@ -136,6 +224,20 @@
 
     // Prevent accidental form submits if user presses Enter in inputs
     document.addEventListener('submit', (e) => e.preventDefault());
+
+    // Animation logic
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.glass').forEach(el => {
+      observer.observe(el);
+    });
   </script>
 </body>
 </html>
+
