@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CitizenOne - Profile (Phone Verification)</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji';
+      background: linear-gradient(135deg, #1E3A8A, #F8FAFC);
+      color: #1E3A8A; min-height: 100vh; display: grid; place-items: center;
+    }
+    .card {
+      width: 100%; max-width: 420px; padding: 1.5rem; border-radius: 14px;
+      background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.28);
+      backdrop-filter: blur(14px); box-shadow: 0 6px 20px rgba(30,58,138,0.25);
+      color: #0f172a;
+    }
+    h1 { margin: 0 0 0.75rem; color: #fff; font-size: 1.4rem; }
+    label { display:block; margin: 0.75rem 0 0.25rem; color: #f1f5f9; font-weight: 600; }
+    input {
+      width: 100%; padding: 0.7rem; border-radius: 8px; border: none;
+      background: rgba(255,255,255,0.12); color: #fff;
+    }
+    input::placeholder { color: rgba(255,255,255,0.75); }
+    .row { display:flex; gap: 0.5rem; align-items: center; }
+    button {
+      cursor: pointer; border: none; border-radius: 8px; padding: 0.7rem 1rem;
+      background: #F97316; color: #fff; font-weight: 700; transition: 0.2s;
+    }
+    button:hover { background: #059669; box-shadow: 0 0 12px #059669; }
+    .msg { margin-top: 0.75rem; font-weight: 700; color: #e2e8f0; min-height: 1.4em; }
+    .subtle { font-size: 0.9rem; color: #e2e8f0; margin-top: 0.5rem; }
+    .nav { margin-top: 1rem; }
+    a { color: #F97316; font-weight: 700; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self'; style-src 'unsafe-inline' 'self';" />
+  <!--
+    Open this page via the Express server: http://localhost:3000/profile.html
+    The server exposes /api/verify/start and /api/verify/check.
+  -->
+  <script>
+    async function startVerification() {
+      const phone = document.getElementById('phone').value.trim();
+      const msg = document.getElementById('msg');
+      msg.textContent = '';
+      toggleButtons(true);
+      try {
+        const res = await fetch('/api/verify/start', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed to start');
+        msg.textContent = 'Code sent. Check your SMS.';
+      } catch (e) {
+        msg.textContent = e.message;
+      } finally {
+        toggleButtons(false);
+      }
+    }
+
+    async function checkVerification() {
+      const phone = document.getElementById('phone').value.trim();
+      const code = document.getElementById('code').value.trim();
+      const msg = document.getElementById('msg');
+      msg.textContent = '';
+      toggleButtons(true);
+      try {
+        const res = await fetch('/api/verify/check', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone, code })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed to check');
+        if (data.approved) {
+          msg.textContent = 'Phone verified!';
+          msg.style.color = '#34d399';
+        } else {
+          msg.textContent = `Status: ${data.status}. Please check the code.`;
+          msg.style.color = '#e2e8f0';
+        }
+      } catch (e) {
+        msg.textContent = e.message;
+        msg.style.color = '#fecaca';
+      } finally {
+        toggleButtons(false);
+      }
+    }
+
+    function toggleButtons(disabled) {
+      document.getElementById('sendBtn').disabled = disabled;
+      document.getElementById('checkBtn').disabled = disabled;
+    }
+  </script>
+  </head>
+<body>
+  <div class="card">
+    <h1>Verify Your Phone</h1>
+    <label for="phone">Phone (E.164, e.g. +14155551234)</label>
+    <div class="row">
+      <input id="phone" type="tel" placeholder="+14155551234" autocomplete="tel" />
+      <button id="sendBtn" onclick="startVerification()">Send Code</button>
+    </div>
+
+    <label for="code">Verification Code</label>
+    <div class="row">
+      <input id="code" type="text" placeholder="123456" inputmode="numeric" />
+      <button id="checkBtn" onclick="checkVerification()">Verify</button>
+    </div>
+
+    <div id="msg" class="msg"></div>
+    <div class="subtle">For demo only. Do not share codes.</div>
+    <div class="nav"><a href="index.html">Back to Home</a></div>
+  </div>
+</body>
+</html>
+
