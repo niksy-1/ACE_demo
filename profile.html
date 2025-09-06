@@ -35,6 +35,20 @@
     .nav { margin-top: 1rem; }
     a { color: #F97316; font-weight: 700; text-decoration: none; }
     a:hover { text-decoration: underline; }
+    /* Toast popup */
+    .toast {
+      position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%) translateY(20px);
+      background: rgba(15,23,42,0.92); color: #fff; padding: 10px 14px; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.18); box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      opacity: 0; pointer-events: none; transition: transform .25s ease, opacity .25s ease;
+      z-index: 1000; font-weight: 600; font-size: 0.95rem;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    /* Resend link + countdown */
+    .resend-wrap { margin-top: 0.5rem; }
+    .resend { color: #F97316; text-decoration: underline; }
+    .resend.disabled { opacity: 0.6; pointer-events: none; text-decoration: none; cursor: default; }
+    .countdown { margin-left: 8px; opacity: 0.9; font-variant-numeric: tabular-nums; }
   </style>
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self'; style-src 'unsafe-inline' 'self';" />
   <!--
@@ -42,11 +56,89 @@
     The server exposes /api/verify/start and /api/verify/check.
   -->
   <script>
+    let resendTimerId = null;
+    let toastTimerId = null;
+    let hasSentOnce = false;
+
+    function setResendState(enabled, remaining) {
+      const link = document.getElementById('resendLink');
+      const cd = document.getElementById('resendCountdown');
+      if (!link || !cd) return;
+      if (enabled) {
+        link.classList.remove('disabled');
+        link.setAttribute('aria-disabled', 'false');
+        cd.textContent = '';
+      } else {
+        link.classList.add('disabled');
+        link.setAttribute('aria-disabled', 'true');
+        cd.textContent = typeof remaining === 'number' ? `(Resend in ${remaining}s)` : '';
+      }
+    }
+
+    function setSendLoading(loading) {
+      const btn = document.getElementById('sendBtn');
+      btn.disabled = loading || btn.dataset.cooldown === 'true';
+      if (loading) btn.dataset.label = btn.textContent;
+      btn.textContent = loading ? 'Sending…' : (btn.dataset.cooldown === 'true' ? btn.textContent : (hasSentOnce ? 'Resend Code' : 'Send Code'));
+      // Disable link while actively sending
+      if (loading) setResendState(false);
+      else if (hasSentOnce && btn.dataset.cooldown !== 'true') setResendState(true);
+    }
+
+    function setCheckLoading(loading) {
+      const btn = document.getElementById('checkBtn');
+      btn.disabled = loading;
+      if (loading) {
+        btn.dataset.label = btn.textContent;
+        btn.textContent = 'Verifying…';
+      } else {
+        btn.textContent = btn.dataset.label || 'Verify';
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toastTimerId);
+      toastTimerId = setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    function startResendCooldown(seconds) {
+      const btn = document.getElementById('sendBtn');
+      clearInterval(resendTimerId);
+      btn.dataset.cooldown = 'true';
+      btn.disabled = true;
+      let remaining = seconds;
+      const update = () => {
+        btn.textContent = `Resend in ${remaining}s`;
+        setResendState(false, remaining);
+        remaining -= 1;
+        if (remaining < 0) {
+          clearInterval(resendTimerId);
+          btn.dataset.cooldown = 'false';
+          btn.disabled = false;
+          hasSentOnce = true;
+          btn.textContent = 'Resend Code';
+          setResendState(true);
+        }
+      };
+      update();
+      resendTimerId = setInterval(update, 1000);
+    }
+
     async function startVerification() {
       const phone = document.getElementById('phone').value.trim();
       const msg = document.getElementById('msg');
       msg.textContent = '';
-      toggleButtons(true);
+
+      // Basic client-side validation for E.164 format
+      if (!/^\+?[1-9]\d{7,14}$/.test(phone)) {
+        msg.textContent = 'Enter a valid phone (e.g., +14155551234)';
+        return;
+      }
+
+      setSendLoading(true);
       try {
         const res = await fetch('/api/verify/start', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -55,10 +147,12 @@
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Failed to start');
         msg.textContent = 'Code sent. Check your SMS.';
+        showToast('Code sent');
+        startResendCooldown(30);
       } catch (e) {
         msg.textContent = e.message;
       } finally {
-        toggleButtons(false);
+        setSendLoading(false);
       }
     }
 
@@ -67,7 +161,8 @@
       const code = document.getElementById('code').value.trim();
       const msg = document.getElementById('msg');
       msg.textContent = '';
-      toggleButtons(true);
+
+      setCheckLoading(true);
       try {
         const res = await fetch('/api/verify/check', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -86,14 +181,21 @@
         msg.textContent = e.message;
         msg.style.color = '#fecaca';
       } finally {
-        toggleButtons(false);
+        setCheckLoading(false);
       }
     }
 
-    function toggleButtons(disabled) {
-      document.getElementById('sendBtn').disabled = disabled;
-      document.getElementById('checkBtn').disabled = disabled;
-    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const link = document.getElementById('resendLink');
+      if (link) {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (link.classList.contains('disabled')) return;
+          startVerification();
+        });
+      }
+      setResendState(false);
+    });
   </script>
   </head>
 <body>
@@ -104,6 +206,7 @@
       <input id="phone" type="tel" placeholder="+14155551234" autocomplete="tel" />
       <button id="sendBtn" onclick="startVerification()">Send Code</button>
     </div>
+    <div class="resend-wrap subtle">Didn't receive it? <a href="#" id="resendLink" class="resend disabled" aria-disabled="true">Resend</a> <span id="resendCountdown" class="countdown"></span></div>
 
     <label for="code">Verification Code</label>
     <div class="row">
@@ -115,6 +218,6 @@
     <div class="subtle">For demo only. Do not share codes.</div>
     <div class="nav"><a href="index.html">Back to Home</a></div>
   </div>
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 </body>
 </html>
-
