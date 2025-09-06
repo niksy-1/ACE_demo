@@ -13,7 +13,7 @@
 
     async function loadUserInfo() {
       const { data, error } = await supabase
-        .from("user_info")   // 👈 correct table name
+        .from("users_info")
         .select("*");
 
       if (error) {
@@ -32,3 +32,4 @@
   <h1>Supabase Browser Test</h1>
 </body>
 </html>
+
