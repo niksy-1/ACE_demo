@@ -1,5 +1,4 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 body {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #1E3A8A, #F8FAFC);
@@ -7,7 +6,6 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
 }
-
 /* Glassmorphism utility */
 .glass {
   background: rgba(255, 255, 255, 0.15);
@@ -20,20 +18,16 @@ body {
   transform: translateY(40px);
   transition: all 0.8s ease-out;
 }
-
 .show { opacity: 1; transform: translateY(0); }
-
 /* Dark Mode Styles */
 body.dark-mode {
   background: linear-gradient(135deg, #0F172A, #1E293B);
   color: #F8FAFC;
 }
-
 .dark-mode .glass {
   background: rgba(15, 23, 42, 0.25);
   border: 1px solid rgba(248, 250, 252, 0.15);
 }
-
 /* Navbar */
 nav {
   display: flex;
@@ -43,7 +37,6 @@ nav {
   position: sticky; top: 0; z-index: 100;
 }
 nav.glass { background: rgba(30, 58, 138, 0.55); }
-
 .nav-brand {
   display: flex;
   align-items: center;
@@ -51,13 +44,11 @@ nav.glass { background: rgba(30, 58, 138, 0.55); }
 }
 .nav-brand h1 { color: #FFFFFF; font-size: 1.6rem; font-weight: bold; }
 .nav-brand i { color: #F97316; font-size: 1.8rem; }
-
 .nav-controls {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
-
 .theme-toggle, .notification-btn {
   background: rgba(255, 255, 255, 0.1);
   border: none;
@@ -70,7 +61,6 @@ nav.glass { background: rgba(30, 58, 138, 0.55); }
 .theme-toggle:hover, .notification-btn:hover {
   background: rgba(249, 115, 22, 0.3);
 }
-
 .notification-btn {
   position: relative;
 }
@@ -88,7 +78,6 @@ nav.glass { background: rgba(30, 58, 138, 0.55); }
   align-items: center;
   justify-content: center;
 }
-
 nav button.login-btn {
   padding: 0.6rem 1.2rem;
   border: none; border-radius: 8px;
@@ -101,7 +90,6 @@ nav button.login-btn:hover {
   background: #059669;
   box-shadow: 0 0 12px #059669;
 }
-
 /* Link styling for simple service pages */
 nav a {
   color: #F2F2F2;
@@ -110,28 +98,23 @@ nav a {
   font-weight: bold;
   transition: color 0.3s;
 }
-
 nav a:hover { color: #F97316; }
 nav span { color: #FFFFFF; font-weight: bold; }
-
 .container {
   max-width: 800px;
   margin: 3rem auto;
   padding: 2rem;
 }
-
 h2 {
   color: #FFFFFF;
   margin-bottom: 1rem;
   text-align: center;
 }
-
 form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-
 form input,
 form select,
 form textarea {
@@ -143,18 +126,15 @@ form textarea {
   color: #FFFFFF;
   margin: 0;
 }
-
 form input::placeholder,
 form textarea::placeholder,
 form select {
   color: rgba(255, 255, 255, 0.7);
 }
-
 form option {
   background-color: #1E3A8A;
   color: #FFFFFF;
 }
-
 form button {
   width: 100%;
   padding: 0.8rem;
@@ -166,12 +146,10 @@ form button {
   cursor: pointer;
   transition: 0.3s;
 }
-
 form button:hover {
   background: #059669;
   box-shadow: 0 0 12px #059669;
 }
-
 #appointmentMsg,
 #billMsg,
 #complaintMsg,
@@ -181,7 +159,6 @@ form button:hover {
   color: #059669;
   text-align: center;
 }
-
 footer {
   background: rgba(30,58,138,0.7);
   color: #FFFFFF;
@@ -190,7 +167,6 @@ footer {
   margin-top: 2rem;
   font-size: 0.9rem;
 }
-
 /* Hero */
 .hero {
   text-align: center;
@@ -208,7 +184,6 @@ footer {
   margin: 0 auto 1.5rem;
   color: #F1F5F9;
 }
-
 .hero-actions {
   display: flex;
   gap: 1rem;
@@ -216,7 +191,6 @@ footer {
   flex-wrap: wrap;
   margin-bottom: 2rem;
 }
-
 .hero button {
   padding: 0.8rem 1.5rem;
   border-radius: 10px;
@@ -228,7 +202,6 @@ footer {
   align-items: center;
   gap: 0.5rem;
 }
-
 .hero button.primary {
   background: #F97316;
   color: #FFFFFF;
@@ -238,7 +211,6 @@ footer {
   box-shadow: 0 0 16px #059669;
   transform: translateY(-2px);
 }
-
 .hero button.secondary {
   background: rgba(255, 255, 255, 0.1);
   color: #FFFFFF;
@@ -248,7 +220,6 @@ footer {
   background: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
 }
-
 /* Quick Stats */
 .quick-stats {
   display: flex;
@@ -271,7 +242,6 @@ footer {
   font-size: 0.9rem;
   opacity: 0.9;
 }
-
 /* Search Section */
 .search-section {
   max-width: 600px;
@@ -302,7 +272,6 @@ footer {
   color: #6B7280;
   font-size: 1.2rem;
 }
-
 /* Features */
 .features {
   display: grid;
@@ -352,7 +321,6 @@ footer {
   font-size: 0.8rem;
   opacity: 0.8;
 }
-
 /* Service Status Section */
 .service-status {
   max-width: 800px;
@@ -400,7 +368,6 @@ footer {
   background: #3B82F6;
   color: #FFFFFF;
 }
-
 /* Demo */
 .demo {
   padding: 3rem 1rem;
@@ -412,7 +379,6 @@ footer {
   color: #FFFFFF;
   position: relative;
 }
-
 .form-tabs {
   display: flex;
   margin-bottom: 2rem;
@@ -432,7 +398,6 @@ footer {
 .tab-btn.active {
   background: #F97316;
 }
-
 input, textarea, select, .form-card button {
   width: 100%;
   padding: 0.8rem;
@@ -450,7 +415,6 @@ input:focus, textarea:focus, select:focus {
   background: rgba(255,255,255,0.2);
   box-shadow: 0 0 10px rgba(249, 115, 22, 0.3);
 }
-
 .file-upload {
   position: relative;
   cursor: pointer;
@@ -472,7 +436,6 @@ input:focus, textarea:focus, select:focus {
 .file-upload-label:hover {
   background: rgba(255,255,255,0.2);
 }
-
 .form-card button {
   background: #F97316;
   color: #FFFFFF;
@@ -494,7 +457,6 @@ input:focus, textarea:focus, select:focus {
   cursor: not-allowed;
   transform: none;
 }
-
 .form-message {
   margin-top: 1rem;
   padding: 1rem;
@@ -511,7 +473,6 @@ input:focus, textarea:focus, select:focus {
   color: #F87171;
   border: 1px solid rgba(220, 38, 38, 0.3);
 }
-
 /* Progress Bar */
 .progress-container {
   width: 100%;
@@ -528,7 +489,6 @@ input:focus, textarea:focus, select:focus {
   transition: width 0.5s ease;
   border-radius: 3px;
 }
-
 /* About */
 .about { 
   padding: 4rem 2rem; 
@@ -538,7 +498,6 @@ input:focus, textarea:focus, select:focus {
 }
 .about h3 { color: #FFFFFF; margin-bottom: 1rem; }
 .about p { color: #3869aa; margin-bottom: 2rem; }
-
 .feature-highlights {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -563,7 +522,6 @@ input:focus, textarea:focus, select:focus {
   color: #3869aa;
   font-size: 0.9rem;
 }
-
 /* Footer */
 footer {
   background: rgba(30,58,138,0.7);
@@ -613,10 +571,8 @@ footer {
 .social-links a:hover {
   transform: translateY(-2px);
 }
-
 /* Animation Classes */
 .show { opacity: 1; transform: translateY(0); }
-
 /* Loading Animation */
 .loading {
   display: none;
@@ -639,7 +595,6 @@ footer {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
 /* Floating Action Button */
 .fab {
   position: fixed;
@@ -662,7 +617,6 @@ footer {
   box-shadow: 0 6px 25px rgba(5, 150, 105, 0.4);
   transform: translateY(-2px);
 }
-
 /* Responsive Design */
 @media(max-width:768px){
   .hero h2 { font-size: 2rem; }
@@ -676,7 +630,6 @@ footer {
   .footer-content { grid-template-columns: 1fr; text-align: center; }
   .fab { bottom: 1rem; right: 1rem; }
 }
-
 @media(max-width:480px){
   .hero { padding: 3rem 1rem; }
   .demo { padding: 2rem 1rem; }
