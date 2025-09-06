@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CitizenOne - Unified Services</title>
+  <style>
+    /* Reset & Base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background: linear-gradient(to bottom, #ffffff, #e9f7ef);
+      color: #333;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    nav h1 { color: #1d7a46; font-size: 1.5rem; font-weight: bold; }
+    nav button {
+      padding: 0.5rem 1rem;
+      border: 2px solid #1d7a46;
+      border-radius: 8px;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    nav button:hover { background: #1d7a46; color: #fff; }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+      animation: fadeIn 1s ease-in;
+    }
+    .hero h2 {
+      font-size: 2.5rem;
+      color: #1d7a46;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+      color: #555;
+    }
+    .hero button {
+      background: #1d7a46;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .hero button:hover { background: #145a32; }
+
+    /* Features */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .feature-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    .feature-card:hover { transform: translateY(-5px); }
+    .feature-card h3 { margin-top: 1rem; color: #1d7a46; }
+
+    /* Demo Section */
+    .demo {
+      background: #d9f2e3;
+      padding: 3rem 1rem;
+      text-align: center;
+    }
+    .demo h3 { font-size: 2rem; margin-bottom: 1.5rem; color: #145a32; }
+    .demo-forms {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+    .form-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+    .form-card h4 { margin-bottom: 1rem; color: #1d7a46; }
+    input, textarea, select {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    .form-card button {
+      background: #1d7a46;
+      color: #fff;
+      border: none;
+      padding: 0.7rem 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .form-card button:hover { background: #145a32; }
+
+    /* About */
+    .about {
+      max-width: 800px;
+      margin: 3rem auto;
+      padding: 0 1rem;
+      text-align: center;
+    }
+    .about h3 { font-size: 2rem; margin-bottom: 1rem; color: #1d7a46; }
+
+    /* Footer */
+    footer {
+      background: #1d7a46;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <h1>CitizenOne</h1>
+    <button>Login</button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h2>One Portal for All Government Services</h2>
+    <p>From complaints to bill payments, appointments to documents — manage it all from a single access point.</p>
+    <button>Get Started</button>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="feature-card">
+      <h3>📋 Citizen Complaints</h3>
+      <p>Report issues easily with status tracking.</p>
+    </div>
+    <div class="feature-card">
+      <h3>📅 Service Appointments</h3>
+      <p>Book and manage government appointments.</p>
+    </div>
+    <div class="feature-card">
+      <h3>📄 Document Requests</h3>
+      <p>Access and download verified government documents.</p>
+    </div>
+    <div class="feature-card">
+      <h3>💳 Utility Bill Payments</h3>
+      <p>Pay bills securely via UPI/BBPS integrations.</p>
+    </div>
+  </section>
+
+  <!-- Demo -->
+  <section class="demo">
+    <h3>Try a Demo Service</h3>
+    <div class="demo-forms">
+      <!-- Complaint Form -->
+      <div class="form-card">
+        <h4>Lodge a Complaint</h4>
+        <form id="complaintForm">
+          <input type="text" id="issueTitle" placeholder="Issue Title" required>
+          <textarea id="issueDesc" placeholder="Describe your issue" required></textarea>
+          <button type="submit">Submit</button>
+        </form>
+        <p id="complaintMsg" style="color:green; font-weight:bold;"></p>
+      </div>
+
+      <!-- Bill Payment -->
+      <div class="form-card">
+        <h4>Pay a Utility Bill</h4>
+        <form id="billForm">
+          <input type="text" id="consumerId" placeholder="Consumer ID" required>
+          <select id="billType">
+            <option>Electricity</option>
+            <option>Water</option>
+            <option>Gas</option>
+          </select>
+          <button type="submit">Pay Now</button>
+        </form>
+        <p id="billMsg" style="color:green; font-weight:bold;"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about">
+    <h3>Why CitizenOne?</h3>
+    <p>A unified platform reduces confusion, saves time, and increases transparency in government interactions. Designed to be scalable, secure, and citizen-friendly.</p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 CitizenOne | Unified Government Services</p>
+  </footer>
+
+  <script>
+    // Complaint form handler
+    document.getElementById('complaintForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('complaintMsg').innerText = "✅ Complaint submitted successfully!";
+      this.reset();
+    });
+
+    // Bill form handler
+    document.getElementById('billForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const type = document.getElementById('billType').value;
+      document.getElementById('billMsg').innerText = `✅ ${type} bill paid successfully!`;
+      this.reset();
+    });
+  </script>
+
+</body>
+</html>
